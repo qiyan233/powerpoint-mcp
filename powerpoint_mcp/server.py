@@ -8,7 +8,7 @@ from typing import Optional, Union
 from mcp.server.fastmcp import FastMCP
 
 from .tools.snapshot import powerpoint_snapshot
-from .tools.presentation import manage_presentation
+from .tools.presentation import manage_presentation as _manage_presentation
 from .tools.switch_slide import powerpoint_switch_slide
 from .tools.add_speaker_notes import powerpoint_add_speaker_notes
 from .tools.list_templates import powerpoint_list_templates, generate_mcp_response
@@ -23,7 +23,7 @@ from .tools.add_animation import powerpoint_add_animation, generate_mcp_response
 mcp = FastMCP("PowerPoint MCP Server")
 
 @mcp.tool()
-def manage_presentation_tool(
+def manage_presentation(
     action: str,
     file_path: Optional[str] = None,
     save_path: Optional[str] = None,
@@ -64,7 +64,7 @@ def manage_presentation_tool(
     Returns:
         Success message with operation details, or error message
     """
-    return manage_presentation(action, file_path, save_path, template_path, presentation_name)
+    return _manage_presentation(action, file_path, save_path, template_path, presentation_name)
 
 
 
@@ -440,7 +440,7 @@ def manage_slide(
 
 
 @mcp.tool()
-def powerpoint_evaluate_tool(
+def evaluate(
     code: str,
     slide_number: Optional[Union[str,int]] = None,
     shape_ref: Optional[str] = None,
@@ -578,7 +578,7 @@ def add_animation(
         Error: Shape not found with list of available shapes, or invalid parameters
 
     Note: This tool focuses on entrance animations only. Exit animations and complex timing
-    control should be done via powerpoint_evaluate_tool if needed.
+    control should be done via evaluate if needed.
     """
     # Convert string to int if provided
     if slide_number is not None:
