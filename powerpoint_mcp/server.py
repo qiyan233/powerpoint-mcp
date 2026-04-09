@@ -307,77 +307,28 @@ def populate_placeholder(
         # Basic text
         populate_placeholder("Title 1", "My Presentation Title")
 
-        # HTML formatting
-        populate_placeholder("Content Placeholder 2", "<b>Bold</b> and <red>red text</red>")
+        # HTML formatting (bold, italic, underline, colors)
+        populate_placeholder("Content Placeholder 2", "<b>Bold</b>, <i>italic</i>, and <red>red text</red>")
 
-        # LaTeX equations (simple)
-        populate_placeholder("Equation1", "Pythagorean theorem: <latex>a^2+b^2=c^2</latex>")
-
-        # LaTeX equations (complex fractions)
-        populate_placeholder("Equation2", "Quadratic formula: <latex>x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}</latex>")
-
-        # LaTeX equations (integrals)
-        populate_placeholder("Equation3", "Integration: <latex>\\int_a^b f(x)dx</latex>")
-
-        # Mixed content: HTML formatting + LaTeX (positions adjust automatically!)
-        populate_placeholder("Mixed1",
-            "<b>Einstein's famous equation:</b> <latex>E=mc^2</latex> <i>where c is the speed of light</i>")
-
-        # Colored text with fractions
-        populate_placeholder("Mixed2",
-            "<red>Important:</red> The derivative <latex>\\frac{dy}{dx}</latex> represents the <b>rate of change</b>")
-
-        # Multiple equations with formatting
-        populate_placeholder("Mixed3",
-            "Wave equation: <latex>c=\\lambda f</latex> and energy: <latex>E=hf</latex> are <b><blue>fundamental</blue></b>")
-
-        # Lists with LaTeX equations
-        populate_placeholder("List1",
-            "Key formulas:<ul><li><b>Area:</b> <latex>A=\\pi r^2</latex></li><li><b>Circumference:</b> <latex>C=2\\pi r</latex></li><li><b>Volume:</b> <latex>V=\\frac{4}{3}\\pi r^3</latex></li></ul>")
-
-        # Numbered lists with equations
-        populate_placeholder("List2",
-            "Steps:<ol><li>Start with <latex>f(x)=x^2</latex></li><li>Take derivative: <latex>f'(x)=2x</latex></li><li><green>Result is linear!</green></li></ol>")
-
-        # Animation grouping with <para> tags
-        # Each <para> block becomes a separate PowerPoint paragraph for animation
-        # Use with add_animation(shape_name, "fade", animate_text="by_paragraph") to animate each section separately
+        # LaTeX inline with text and formatting (use \\ for backslashes in LaTeX)
         populate_placeholder("Content Placeholder 2",
-            "<para><b><blue>Section 1: Introduction</blue></b>\\n• Point A\\n• Point B\\n• Point C</para><para><b><blue>Section 2: Analysis</blue></b>\\n• Point D\\n• Point E\\n• Point F</para>")
-        # Result: 2 PowerPoint paragraphs (one per <para>), each animates separately with by_paragraph
+            "<red>Important:</red> Quadratic formula: <latex>x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}</latex>")
 
-        # Complex <para> example with LaTeX equations
+        # List with LaTeX
         populate_placeholder("Content Placeholder 2",
-            "<para><b><red>Quadratic Equations</red></b>\\nGeneral form: <latex>ax^2+bx+c=0</latex>\\nSolutions: <latex>x=\\\\frac{-b\\\\pm\\\\sqrt{b^2-4ac}}{2a}</latex></para><para><b><blue>Trigonometry</blue></b>\\n• <b>Sine:</b> <latex>\\\\sin^2\\\\theta+\\\\cos^2\\\\theta=1</latex>\\n• <b>Tangent:</b> <latex>\\\\tan\\\\theta=\\\\frac{\\\\sin\\\\theta}{\\\\cos\\\\theta}</latex></para>")
-        # Result: 2 paragraphs with formatted text + LaTeX, each section animates as one unit
+            "Key formulas:<ul><li><b>Area:</b> <latex>A=\\pi r^2</latex></li><li><b>Volume:</b> <latex>V=\\frac{4}{3}\\pi r^3</latex></li></ul>")
 
-        # Without <para> tags, lists are visual units but don't create paragraph boundaries
+        # Animation grouping — each <para> becomes a separate PowerPoint paragraph
+        # Use with add_animation(shape_name, "fade", animate_text="by_paragraph") to reveal sections one at a time
         populate_placeholder("Content Placeholder 2",
-            "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>")
-        # Result: 1 PowerPoint paragraph (entire list animates together)
+            "<para><b><blue>Section 1</blue></b>\\n• Point A\\n• Point B</para><para><b><blue>Section 2</blue></b>\\n• Point C\\n• Point D</para>")
 
         # Image
         populate_placeholder("Picture Placeholder 7", "C:\\Images\\chart.png", "image")
 
-        # Matplotlib plot (simple)
+        # Matplotlib plot (do NOT include plt.savefig() or plt.close() — handled automatically)
         populate_placeholder("Picture Placeholder 2",
             "plt.plot([1,2,3,4], [1,4,9,16])\\nplt.title('Square Numbers')\\nplt.grid(True)", "plot")
-
-        # Matplotlib plot (educational - quadratic with roots)
-        populate_placeholder("Picture Placeholder 2",
-            '''import numpy as np
-x = np.linspace(-1, 5, 200)
-y = x**2 - 4*x + 3
-plt.figure(figsize=(10, 7))
-plt.plot(x, y, 'b-', linewidth=3, label=r'$f(x) = x^2 - 4x + 3$')
-plt.plot([1, 3], [0, 0], 'ro', markersize=12, label='Roots')
-plt.axhline(y=0, color='k', linewidth=1)
-plt.axvline(x=0, color='k', linewidth=1)
-plt.grid(True, alpha=0.3)
-plt.xlabel('x', fontsize=14)
-plt.ylabel('f(x)', fontsize=14)
-plt.title('Quadratic Equation', fontsize=16, weight='bold')
-plt.legend()''', "plot")
     """
     # Convert string to int if provided
     if slide_number is not None:
