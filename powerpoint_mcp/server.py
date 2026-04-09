@@ -70,7 +70,7 @@ def manage_presentation(
 
 @mcp.tool()
 def slide_snapshot(slide_number: Optional[Union[str,int]] = None,
-                  include_screenshot: Optional[bool] = True,
+                  include_screenshot: Optional[bool] = False,
                   screenshot_filename: Optional[str] = None) -> str:
     """
     Capture comprehensive context of a PowerPoint slide with optional screenshot.
@@ -89,7 +89,7 @@ def slide_snapshot(slide_number: Optional[Union[str,int]] = None,
 
     Args:
         slide_number: Slide number to capture (1-based). If None, uses current active slide
-        include_screenshot: Whether to save a screenshot with bounding boxes. Default True.
+        include_screenshot: Whether to save a screenshot with bounding boxes. Default False. Set to True when you need visual reference of the slide layout.
         screenshot_filename: Optional custom filename for screenshot. If None, generates slide-{timestamp}.png
 
     Returns:
@@ -104,7 +104,7 @@ def slide_snapshot(slide_number: Optional[Union[str,int]] = None,
 
     # Convert boolean if needed (handles JSON boolean type)
     if include_screenshot is None:
-        include_screenshot = True
+        include_screenshot = False
 
     result = powerpoint_snapshot(slide_number, include_screenshot, screenshot_filename)
 
@@ -290,7 +290,7 @@ def populate_placeholder(
     and animation grouping with <para>content</para> tags.
 
     Args:
-        placeholder_name: Name of the placeholder (e.g., "Title 1", "Subtitle 2")
+        placeholder_name: Name of the placeholder (e.g., "Title 1", "Subtitle 2"). Use slide_snapshot() first to get exact placeholder names on the current slide.
         content: Text with HTML/LaTeX formatting, image file path, or matplotlib code
         content_type: "text", "image", "plot", or "auto" (auto-detect based on content)
         slide_number: Target slide number (1-based). If None, uses current active slide
@@ -449,7 +449,7 @@ def evaluate(
     """
     Execute arbitrary Python code in PowerPoint automation context.
 
-    CRITICAL: ALWAYS use 'skills' methods for content operations. Only use direct COM for styling.
+    CRITICAL: Use 'skills' methods for all text content and formatting (including colors, bold, lists, LaTeX) — direct COM text assignment wipes all formatting. Only use COM for shape-level properties like position, size, font size, and rotation.
 
     PREFERRED - Use skills for content, then COM for styling:
         # Step 1: Use skills to add/modify content
@@ -530,7 +530,7 @@ def add_animation(
     disclosure of content.
 
     Args:
-        shape_name: Name of the shape to animate
+        shape_name: Name of the shape to animate. Use slide_snapshot() first to get exact shape names on the current slide.
             Examples: "Title 1", "Content Placeholder 2", "Chart", "Picture 3"
 
         effect: Animation effect type (default: "fade")
