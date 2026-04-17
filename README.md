@@ -4,6 +4,11 @@ The best open-source MCP server for PowerPoint automation. Free, no subscription
 
 Built by a UCSD grad student who was tired of spending 3-4 hours per week making presentations.
 
+**Languages**
+- [English](#powerpoint-mcp-server)
+- [中文](README.zh-CN.md)
+- [日本語](README.ja.md)
+
 [![PyPI version](https://badge.fury.io/py/powerpoint-mcp.svg)](https://badge.fury.io/py/powerpoint-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -146,6 +151,82 @@ claude mcp add powerpoint --scope user -- uvx powerpoint-mcp
 }
 ```
 4. Restart your IDE after configuration.
+
+### Trae
+1. Create `.trae/mcp.json` in your project root
+2. Add the following:
+```json
+{
+  "mcpServers": {
+    "powerpoint": {
+      "command": "uvx",
+      "args": ["powerpoint-mcp"]
+    }
+  }
+}
+```
+3. Restart Trae after configuration and use an MCP-enabled agent mode
+
+### Trae CN
+1. Trae CN currently supports the same project-level `.trae/mcp.json` format
+2. Add the following to `.trae/mcp.json` in your project root:
+```json
+{
+  "mcpServers": {
+    "powerpoint": {
+      "command": "uvx",
+      "args": ["powerpoint-mcp"]
+    }
+  }
+}
+```
+3. Restart Trae CN after configuration and use an MCP-enabled agent mode such as Builder with MCP / SOLO Coder if available in your build
+
+### Codex
+This server is Windows-only, so on Windows PowerShell use:
+```bash
+codex mcp add powerpoint -- cmd /c uvx powerpoint-mcp
+```
+
+After adding it, restart Codex CLI or run `/mcp` to verify the server is available.
+
+### CodeBuddy
+1. In the sidebar chat panel, click the CodeBuddy Settings button
+2. Open the MCP tab
+3. Click Add MCP
+4. Add the following JSON:
+```json
+{
+  "mcpServers": {
+    "powerpoint": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["powerpoint-mcp"],
+      "description": "PowerPoint automation on Windows"
+    }
+  }
+}
+```
+5. Save the configuration, then use Try to Run or invoke it from an agent
+
+### CodeBuddy CN
+1. 在侧栏对话面板右上方点击 CodeBuddy Settings
+2. 切换到 MCP 标签页
+3. 点击 Add MCP
+4. 添加以下 JSON：
+```json
+{
+  "mcpServers": {
+    "powerpoint": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["powerpoint-mcp"],
+      "description": "PowerPoint automation on Windows"
+    }
+  }
+}
+```
+5. 保存配置后，可通过 Try to Run 验证，或直接在 Agent 中调用
 
 ### OpenCode
 1. Open `~/.config/opencode/opencode.json` for a global setup, or `opencode.json` in your project root for a project-specific setup
